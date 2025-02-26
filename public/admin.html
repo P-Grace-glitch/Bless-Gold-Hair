@@ -168,27 +168,23 @@ h1 {
     </form>
 <script>
 const form = document.getElementById('product-form');
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const formData = new FormData(form);
-    const response = await fetch('/products', { method: 'POST', body: formData, });
+const submitButton = document.getElementById('submit-button');
+
+submitButton.addEventListener('click', async (e) => {
+  e.preventDefault();
+  const formData = new FormData(form);
+  try {
+    const response = await fetch('/api/products', {
+      method: 'POST',
+      body: formData,
+    });
     const data = await response.json();
     console.log(data);
-    location.reload(); // Add this line to refresh the page
-  });
-</script>
-<script>
-  const form = document.getElementById('product-form');
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const formData = new FormData(form);
-    const response = await fetch('/products', { method: 'POST', body: formData, });
-    const data = await response.json();
-    console.log(data);
-    setTimeout(() => {
-      location.reload();
-    }, 1000); // Refresh the page after 1 second
-  });
+    location.reload(); // Refresh the page
+  } catch (error) {
+    console.error(error);
+  }
+});
 </script>
 </body>
 </html>
