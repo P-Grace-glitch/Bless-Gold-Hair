@@ -1,0 +1,19 @@
+.product1 {
+  max-width: 968px;
+  margin-left: auto;
+  margin-right: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(21rem, auto));
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 10rem;
+  box-shadow: 1px 2px 11px 4x rgb(14 55 54 / 15%);
+}
+.product1-text span {
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #eb984b;
+}
+.product1-text p {
+  margin: 0.5rem 0 1rem;
+}

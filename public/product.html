@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products</title>
+  <!-- Box Icon -->
+    <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+  <style>
+  /* Add some basic styling to make the data look nicer */
+
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+  }
+header {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 90%;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: whitesmoke;
+            box-shadow: 0 8px 11px rgb(14 55 54 /15%);
+            padding: 20px 100px;
+            transition: 0.5s;
+          }
+    .logo {
+        display: flex;
+        align-items: center;
+        font-size: 1.1rem;
+        font-weight: 600;
+        column-gap: 0.5rem;
+        color: #660066;
+        text-decoration: none;
+        margin-left: 30px;
+        }
+    .logo .bx {
+        font-size: 24px;
+        color: #eb984b;
+      }
+    .navbar {
+        list-style-type: none;
+        column-gap: 0.5rem;
+        width: 15rem;
+        display: flex;
+        }
+    .navbar a {
+        font-size: 1rem;
+        font-weight: 530;
+        color: #660066;
+        padding: 0.5rem 1rem;
+        text-decoration: none;
+        }
+    .navbar a:hover {
+        background-color: rgb(196, 12, 202);
+        border-radius: 50px;
+        color: white;
+        transition: background-color 0.5s ease;
+        }
+  h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    margin-top: 9rem;
+  }
+
+  .product {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: 0 auto 0;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    width: 50%;
+  }
+
+  .product h2 {
+    margin-top: 0;
+    color: #6c5ce7;
+  }
+
+  .product input[type="text"],
+  .product textarea,
+  .product input[type="number"] {
+    width: 90%;
+    height: 40px;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f7f7f7;
+  }
+
+  .product input[type="file"] {
+    display: none;
+  }
+
+  .product button {
+    background-color: #6c5ce7;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .product button:hover {
+    background-color: #7868e6;
+  }
+
+  .product .edit-image-button{
+    background-color: #9c88ff;
+  }
+  .product .edit-button {
+    background-color: purple;
+  }
+
+  .product .edit-image-button:hover,
+  .product .edit-button:hover {
+    background-color: #b291ff;
+  }
+
+  .product .cancel-button {
+    background-color: red;
+  }
+
+  .product .cancel-button:hover {
+    background-color: #ffa4a4;
+  }
+
+  .product .save-button {
+    background-color: #6c5ce7;
+  }
+
+  .product .save-button:hover {
+    background-color: #7868e6;
+  }
+
+  .product img {
+    width: 220px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+</style>
+
+</head>
+<body>
+  <!-- Header -->
+    <header>
+        <a href="#" class="logo"><i class='bx bxl-tailwind-css'></i>Bless Gold</a>
+
+
+        <!-- Menu Icon -->
+        <!-- <div class="bx bx-menu" id="menu-icon"></div> -->
+
+
+        <!-- Nav List -->
+        <ul class="navbar">
+            <li><a href="admin.html" class="home-active">Admin Panel</a></li>
+            <li><a href="shopcart.html" class="home-active">Shop</a></li>
+            
+        </ul>
+    </header>
+  <h1>Products</h1>
+  <div id="products-container"></div>
+
+  <script>
+    const productsContainer = document.getElementById('products-container');
+let productsData = [];
+let editingIndex = null;
+
+const fetchProducts = async () => {
+  const response = await fetch('/products');
+  productsData = await response.json();
+  generateProducts();
+};
+
+const generateProducts = () => {
+  if (Array.isArray(productsData)) {
+    productsContainer.innerHTML = '';
+    productsData.forEach((product, index) => {
+      const productHTML = `
+        <div class="product">
+          <h2>
+            <input type="text" id="name-${index}" value="${product.name}" ${editingIndex === index ? '' : 'disabled'}>
+          </h2>
+          <p>
+            <textarea id="description-${index}" ${editingIndex === index ? '' : 'disabled'}>${product.description}</textarea>
+          </p>
+          <p>
+            Price:
+            <input type="number" id="price-${index}" value="${product.price || ''}" ${editingIndex === index ? '' : 'disabled'}>
+          </p>
+          <img width="220" src="/uploads/${product.image}" alt="${product.name}" id="image-${index}">
+          <input type="file" id="file-${index}" style="display: none;">
+          <button class="edit-image-button" onclick="editImage(${index})" ${editingIndex === index ? '' : 'disabled'}>Edit Image</button>
+          <button class="cancel-button" onclick="deleteProduct(${index})">Cancel</button>
+          <button class="edit-button" onclick="editProduct(${index})" style="${editingIndex === index ? 'display: none;' : ''}">Edit</button>
+          <button class="save-button" onclick="saveProduct(${index})" style="${editingIndex === index ? '' : 'display: none;'}">Save</button>
+        </div>
+      `;
+      productsContainer.innerHTML += productHTML;
+    });
+  } else {
+    console.error('Products data is not an array:', productsData);
+  }
+};
+
+const deleteProduct = async (index) => {
+  const response = await fetch(`/products/${index}`, { method: 'DELETE' });
+  if (response.ok) {
+    await fetchProducts();
+  } else {
+    console.error('Failed to delete product:', response.status);
+  }
+};
+
+const editProduct = (index) => {
+  editingIndex = index;
+  generateProducts();
+};
+
+const saveProduct = async (index) => {
+  const nameInput = document.getElementById(`name-${index}`);
+  const descriptionInput = document.getElementById(`description-${index}`);
+  const priceInput = document.getElementById(`price-${index}`);
+  const fileInput = document.getElementById(`file-${index}`);
+  const name = nameInput.value.trim();
+  const description = descriptionInput.value.trim();
+  const price = parseFloat(priceInput.value.trim());
+  const formData = new FormData();
+  formData.append('name', name);
+  formData.append('description', description);
+  formData.append('price', price);
+  if (fileInput.files.length > 0) {
+    formData.append('image', fileInput.files[0]);
+  }
+  const response = await fetch(`/products/${index}`, { method: 'PUT', body: formData });
+  if (response.ok) {
+    await fetchProducts();
+    editingIndex = null;
+  } else {
+    console.error('Failed to save product:', response.status);
+  }
+};
+
+const editImage = (index) => {
+  const fileInput = document.getElementById(`file-${index}`);
+  fileInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+      const imageData = reader.result;
+      document.getElementById(`image-${index}`).src = imageData;
+    };
+    reader.readAsDataURL(file);
+  });
+  fileInput.click();
+};
+
+fetchProducts();
+  </script>
+</body>
+</html>

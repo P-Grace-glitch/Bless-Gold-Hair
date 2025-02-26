@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel</title>
+<!-- Box Icon -->
+    <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+<style type="text/css">
+    body{
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        box-sizing: border-box;
+        padding: 0;
+    }
+    header {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 90%;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: whitesmoke;
+            box-shadow: 0 8px 11px rgb(14 55 54 /15%);
+            padding: 20px 100px;
+            transition: 0.5s;
+          }
+    .logo {
+        display: flex;
+        align-items: center;
+        font-size: 1.1rem;
+        font-weight: 600;
+        column-gap: 0.5rem;
+        color: #660066;
+        text-decoration: none;
+        }
+    .logo .bx {
+        font-size: 24px;
+        color: #eb984b;
+      }
+    .navbar {
+        list-style-type: none;
+        column-gap: 0.5rem;
+        width: 15rem;
+        display: flex;
+        }
+    .navbar a {
+        font-size: 1rem;
+        font-weight: 530;
+        color: #660066;
+        padding: 0.5rem 1rem;
+        text-decoration: none;
+        }
+    .navbar a:hover {
+        background-color: rgb(196, 12, 202);
+        border-radius: 50px;
+        color: white;
+        transition: background-color 0.5s ease;
+        }
+/*Admin Body*/
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+  margin-top: 9rem;
+}
+
+.product-form {
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.product-form label {
+  display: block;
+  margin-bottom: 10px;
+  color: #666;
+}
+
+.product-form input[type="text"],
+.product-form input[type="number"],
+.product-form textarea {
+  width: 100%;
+  height: 40px;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.product-form input[type="file"] {
+  margin-bottom: 20px;
+}
+
+.product-form button {
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.product-form button:hover {
+  background-color: #3e8e41;
+}
+
+.product-form a {
+  text-decoration: none;
+}
+
+.product-form a:hover {
+  text-decoration: none;
+}
+
+
+</style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <a href="#" class="logo"><i class='bx bxl-tailwind-css'></i>Bless Gold</a>
+
+
+        <!-- Menu Icon -->
+        <!-- <div class="bx bx-menu" id="menu-icon"></div> -->
+
+
+        <!-- Nav List -->
+        <ul class="navbar">
+            <li><a href="index.html" class="home-active">Home</a></li>
+            <li><a href="product.html" class="home-active">View Products</a></li>
+            
+        </ul>
+    </header>
+    <h1>Admin Panel</h1>
+    <form class="product-form" id="product-form">
+        <label for="name">Product Name:</label>
+        <input class="text" type="text" id="name" name="name">
+
+
+        <label for="description">Product Description:</label>
+        <textarea class="text" id="description" name="description"></textarea>
+
+
+        <label for="price">Product Price:</label>
+        <input class="text" type="number" id="price" name="price">
+
+
+        <label for="image">Product Image:</label>
+        <input type="file" id="image" name="image">
+
+
+        <a href="admin.html"><button id="submit-button">Submit</button></a>
+    </form>
+<script>
+const form = document.getElementById('product-form');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const response = await fetch('/products', { method: 'POST', body: formData, });
+    const data = await response.json();
+    console.log(data);
+    location.reload(); // Add this line to refresh the page
+  });
+</script>
+<script>
+  const form = document.getElementById('product-form');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const response = await fetch('/products', { method: 'POST', body: formData, });
+    const data = await response.json();
+    console.log(data);
+    setTimeout(() => {
+      location.reload();
+    }, 1000); // Refresh the page after 1 second
+  });
+</script>
+</body>
+</html>

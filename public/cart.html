@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bless Gold Shop Cart</title>
+    <!-- Box Icon -->
+    <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+</head>
+<style type="text/css">
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: sans-serif;
+}
+i {
+  cursor: pointer;
+}
+a {
+  color: white;
+  text-decoration: none;
+  font-family: sans-serif;
+  font-size: 30px;
+}
+/**
+* ! Navbar Heading
+**/
+.navbar {
+  padding: 25px 60px;
+  background: linear-gradient(45deg, purple, lightblue);
+  color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  width: 100%;
+}
+.cart {
+  background-color: white;
+  color: #212529;
+  padding: 5px;
+  font-size: 30px;
+  border-radius: 4px;
+  position: relative;
+}
+.cartAmount {
+    position: absolute;
+  top: -15px;
+  right: -10px;
+  font-size: 16px;
+  background-color: red;
+  color: white;
+  padding: 5px;
+  border-radius: 4px;
+}
+
+/**
+* ! Shop Items
+**/
+
+.shop {
+  display: grid;
+  grid-template-columns: repeat(4, 250px);
+  gap: 30px;
+  justify-content: center;
+  background: linear-gradient(180deg, rgba(255, 182, 193, 1.0), rgba(10, 0, 1, 0%));
+  position: relative;
+  z-index: 1;
+  top: 4rem;
+}
+@media (max-width: 1000px) {
+  .shop {
+    grid-template-columns: repeat(2, 223px);
+  }
+}
+@media (max-width: 500px) {
+  .shop {
+    grid-template-columns: repeat(1, 223px);
+  }
+}
+.item {
+  border: 2px solid #212529;
+  border-radius: 5px;
+}
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 15px 15px;
+}
+.price-quantity {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.button {
+  display: flex;
+  font-size: 25px;
+  align-items: center;
+}
+.bx-plus {
+  color: green;
+  font-weight: 500;
+}
+.bx-plus:hover {
+  color: white;
+  cursor: pointer;
+  transition: 0.5s;
+  background: linear-gradient(20deg, gray, green);
+  border-radius: 0 4px 4px 0;
+}
+.bx-minus {
+  color: rgb(148, 12, 12);
+  font-weight: 500;
+  margin-top: 1.5px;
+}
+.bx-minus:hover {
+  color: white;
+  cursor: pointer;
+  transition: 0.5s;
+  background: linear-gradient(70deg, red, gray);
+  border-radius: 4px 0 0 4px;
+}
+.button:hover {
+  transform: scale(1.2);
+  width: 62px;
+  background-color: whitesmoke;
+  box-shadow: 1px 2px 11px 4px rgb(14 55 54 / 25%);
+  border-radius: 5px;
+  transition: 0.5s;
+  color: black;
+}
+
+/**
+* ! Style rules for Label and Buttons
+**/
+.text-center {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.HomeBtn,
+.checkout,
+.removeAll {
+  background-color: #212529;
+  color: white;
+  padding: 8px;
+  border-radius: 5px;
+  margin-top: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  border: none;
+}
+.checkout {
+  background-color: green;
+}
+.removeAll {
+  background-color: red;
+}
+.bx-x {
+  color: red;
+  font-weight: bold;
+  height: 25.5px;
+  padding: 1px 1px 1px 1px;
+  border-radius: 4px;
+}
+.bx-x:hover {
+  color: white;
+  background-color: red;
+  transition: 0.5s;
+}
+/**
+* ! Style rules for Shopping Cart
+**/
+.shopping-cart {
+  display: grid;
+  grid-template-columns: repeat(1, 400px);
+  justify-content: center;
+  gap: 15px;
+}
+@media (max-width: 991px){
+    .shopping-cart{
+        grid-template-columns: repeat(1, 300px);
+    }
+}
+@media (max-width: 852px){
+    .shopping-cart{
+        grid-template-columns: repeat(1, 200px);
+    }
+}
+
+/**
+* ! Style rules for Cart Items
+**/
+.cart-item {
+  border: 2px solid #212529;
+  border-radius: 5px;
+  display: flex;
+  background-color: white;
+}
+.title-price-x {
+  display: flex;
+  justify-content: space-between;
+  width: 250px;
+}
+.title-price {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.cart-item-price {
+  color: white;
+  background-color: black;
+  border-radius: 3px;
+  padding: 5px;
+  align-items: center;
+}
+button{
+  border: none;
+  background-color: #333;
+  color: white;
+  padding: 15px;
+  font-size: 1.7rem;
+  border-radius: 10px;
+}
+
+</style>
+<body>
+    <div class="navbar">
+        <a href="index.html">
+            <h2>Bless Gold</h2>
+        </a>
+
+        <a href="cart.html"><div class="cart">
+            <i class='bx bx-cart-alt' ></i>
+            <div id="cartAmount" class="cartAmount">0</div>
+        </div></a>
+    </div>
+    <div class="text-center" id="label"></div>
+        
+    <div id="shopping-cart" class="shopping-cart">
+        
+    </div>
+
+</body>
+<script src="java/data.js"></script>
+<script src="java/cart.js"></script>
+</html>
