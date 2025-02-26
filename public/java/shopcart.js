@@ -1,11 +1,10 @@
+
 let shop = document.getElementById("shop")
 let shopContainer = document.getElementById("shop")
 let basket = JSON.parse(localStorage.getItem("Data")) || [];
-const productsData = JSON.parse(localStorage.getItem('products')) || [];
-
 const generateShop = async () => {
   try {
-    const response = await fetch('/products');
+    const response = await fetch('/api/products');
     const productsData = await response.json();
     console.log('productsData:', productsData);
     const shopContainer = document.getElementById("shop");
@@ -34,10 +33,10 @@ const generateShop = async () => {
     console.error('Error fetching products:', error);
   }
 };
-
 generateShop();
 
 const updateQuantity = () => {
+  const productsData = JSON.parse(localStorage.getItem('products')) || [];
   productsData.forEach((product) => {
     let search = basket.find((x) => x.name === product.name);
     if (search) {
@@ -48,8 +47,6 @@ const updateQuantity = () => {
     }
   });
 };
-
-generateShop();
 updateQuantity();
 
 let increment = (name) => {
@@ -93,7 +90,6 @@ let decrement = (name) => {
     element.innerHTML = search.item;
   });
 };
-
 
 let update = (name) => {
   let search = basket.find((x) => x.name === name);
