@@ -172,12 +172,12 @@ header {
   <div id="products-container"></div>
 
   <script>
-    const productsContainer = document.getElementById('products-container');
+ const productsContainer = document.getElementById('products-container');
 let productsData = [];
 let editingIndex = null;
 
 const fetchProducts = async () => {
-  const response = await fetch('/products');
+  const response = await fetch('/api/products');
   productsData = await response.json();
   generateProducts();
 };
@@ -195,8 +195,7 @@ const generateProducts = () => {
             <textarea id="description-${index}" ${editingIndex === index ? '' : 'disabled'}>${product.description}</textarea>
           </p>
           <p>
-            Price:
-            <input type="number" id="price-${index}" value="${product.price || ''}" ${editingIndex === index ? '' : 'disabled'}>
+            Price: <input type="number" id="price-${index}" value="${product.price || ''}" ${editingIndex === index ? '' : 'disabled'}>
           </p>
           <img width="220" src="/uploads/${product.image}" alt="${product.name}" id="image-${index}">
           <input type="file" id="file-${index}" style="display: none;">
@@ -214,7 +213,7 @@ const generateProducts = () => {
 };
 
 const deleteProduct = async (index) => {
-  const response = await fetch(`/products/${index}`, { method: 'DELETE' });
+  const response = await fetch(`/api/products/${index}`, { method: 'DELETE' });
   if (response.ok) {
     await fetchProducts();
   } else {
@@ -242,7 +241,7 @@ const saveProduct = async (index) => {
   if (fileInput.files.length > 0) {
     formData.append('image', fileInput.files[0]);
   }
-  const response = await fetch(`/products/${index}`, { method: 'PUT', body: formData });
+  const response = await fetch(`/api/products/${index}`, { method: 'PUT', body: formData });
   if (response.ok) {
     await fetchProducts();
     editingIndex = null;
